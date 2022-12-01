@@ -1,3 +1,5 @@
+// https://adventofcode.com/2022/day/DAYNUMBERURL
+
 import { getInputData } from "../lib/utils.js";
 
 const _inputPath = "./dayDAYNUMBER/inputPart.txt";
