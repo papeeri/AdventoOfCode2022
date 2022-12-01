@@ -1,6 +1,6 @@
-import { getInputData } from '../lib/utils.js';
+import { getInputData } from "../lib/utils.js";
 
-const _inputPath = './dayDAYNUMBER/input.txt';
+const _inputPath = "./dayDAYNUMBER/inputPart.txt";
 
 function parser(inputData) {
     return inputData.split(/\r?\n/);
