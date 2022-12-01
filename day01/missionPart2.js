@@ -27,7 +27,8 @@ function parser(inputData) {
 function mission() {
     let elfes = getInputData(_inputPath)(parser);
 
-    let elfMostColories = 0;
+    let elfesCalories = [];
+
     for (let e = 0; e < elfes.length; e++) {
         let elfCalories = 0;
 
@@ -35,14 +36,18 @@ function mission() {
             elfCalories += elfes[e][c];
         }
 
-        if (elfMostColories < elfCalories) {
-            elfMostColories = elfCalories;
-        }
-
-        console.log("ElfCalories:", elfCalories);
+        elfesCalories.push(elfCalories);
     }
 
-    console.log("Elf with most colories has:", elfMostColories);
+    const sortedCalories = elfesCalories.sort((a, b) => b - a);
+
+    let totalTopThree = 0;
+
+    for (let e = 0; e < 3; e++) {
+        totalTopThree += sortedCalories[e];
+    }
+
+    console.log("Total top three:", totalTopThree);
 }
 
 mission();
