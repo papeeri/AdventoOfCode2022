@@ -5,7 +5,8 @@ import { getInputData } from "../lib/utils.js";
 const _inputPath = "./dayDAYNUMBER/inputPart.txt";
 
 function parser(inputData) {
-    return inputData.split(/\r?\n/);
+    let input = inputData.split(/\r?\n/);
+    return input;
 }
 
 function mission() {
