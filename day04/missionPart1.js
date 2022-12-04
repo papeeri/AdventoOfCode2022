@@ -18,17 +18,18 @@ function parser(inputData) {
 function mission() {
     let input = getInputData(_inputPath)(parser);
 
-    let rangeFullyContaInTheOther = 0;
+    let rangeFullyContainedInTheOther = 0;
 
     input.map((p) => {
         if ((p[0].a >= p[1].a && p[0].b <= p[1].b) || (p[1].a >= p[0].a && p[1].b <= p[0].b)) {
+            rangeFullyContainedInTheOther++;
             // if (!(p[0].a === p[1].a && p[0].b === p[1].b)) {
-            rangeFullyContaInTheOther++;
+            //     rangeFullyContainedInTheOther++;
             // }
         }
     });
 
-    console.log("Total of range fully contain the other:", rangeFullyContaInTheOther);
+    console.log("Total of range fully contain the other:", rangeFullyContainedInTheOther);
 }
 
 mission();
