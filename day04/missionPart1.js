@@ -8,7 +8,7 @@ function parser(inputData) {
     let input = inputData.split(/\r?\n/).map((r) =>
         r.split(",").map((e) => {
             let s = e.split("-");
-            return { a: s[0], b: s[1] };
+            return { a: parseInt(s[0]), b: parseInt(s[1]) };
         })
     );
 
@@ -23,9 +23,6 @@ function mission() {
     input.map((p) => {
         if ((p[0].a >= p[1].a && p[0].b <= p[1].b) || (p[1].a >= p[0].a && p[1].b <= p[0].b)) {
             rangeFullyContainedInTheOther++;
-            // if (!(p[0].a === p[1].a && p[0].b === p[1].b)) {
-            //     rangeFullyContainedInTheOther++;
-            // }
         }
     });
 
