@@ -17,8 +17,8 @@ function mission() {
 }
 
 function getFirstMarkerPosition(buffer) {
-    for (let i = 4; i < buffer.length; i++) {
-        const bufferPart = buffer.substring(i - 4, i);
+    for (let i = 14; i < buffer.length; i++) {
+        const bufferPart = buffer.substring(i - 14, i);
 
         if (hasDuplicates(bufferPart) === false) {
             return i;
