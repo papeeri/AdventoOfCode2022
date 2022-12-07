@@ -2,7 +2,7 @@
 
 import { getInputData } from "../lib/utils.js";
 
-const _inputPath = "./day07/inputPart.txt";
+const _inputPath = "./day07/input.txt";
 
 function parser(inputData) {
     let input = inputData.split(/\r?\n/);
@@ -16,6 +16,8 @@ function mission() {
     const maxSize = 100000;
     let totalSize = 0;
 
+    let dirSizes = [];
+
     for (const path of dirs.keys()) {
         let dir = dirs.get(path);
         let dirSize = 0;
@@ -23,20 +25,29 @@ function mission() {
         dir.map((e) => {
             if (!e.startsWith("dir")) {
                 let size = Number.parseInt(e.split(" ")[0]);
-
                 dirSize += size;
             }
-
-            console.log(e);
         });
 
-        console.log(dirSize);
-        if (dirSize <= maxSize) {
-            totalSize += dirSize;
-        }
+        dirSizes.push({ path: path, size: dirSize });
     }
 
-    console.log("End");
+    dirSizes.map((dir) => {
+        let children = dirSizes.filter((d) => d.path.includes(dir.path) && d.path !== dir.path);
+
+        dir.totalSize = dir.size;
+        children.map((c) => {
+            dir.totalSize += c.size;
+        });
+    });
+
+    dirSizes.map((dir) => {
+        if (dir.totalSize <= maxSize) {
+            totalSize += dir.totalSize;
+        }
+    });
+
+    console.log("Total size:", totalSize);
 }
 
 function getFileStructure(input) {
