@@ -5,12 +5,7 @@ import { getInputData } from "../lib/utils.js";
 const _inputPath = "./day08/input.txt";
 
 function parser(inputData) {
-    let input = inputData.split(/\r?\n/).map((r) =>
-        r.split("").map((x) => {
-            return { height: parseInt(x) };
-        })
-    );
-    return input;
+    return inputData.split(/\r?\n/).map((r) => r.split("").map(Number));
 }
 
 function mission() {
@@ -22,7 +17,6 @@ function mission() {
         for (let x = 0; x < input[y].length; x++) {
             let scenicScore = getScenicScore(y, x, input);
 
-            input[y][x].scenicScore = scenicScore;
             if (scenicScore > highestScenicScore) {
                 highestScenicScore = scenicScore;
             }
@@ -38,16 +32,16 @@ function getScenicScore(y, x, input) {
     }
 
     let treesToTheLeft = getTreesToTheLeft(y, x, input);
-    let visibleTreesLeft = getVisibleTrees(input[y][x].height, treesToTheLeft);
+    let visibleTreesLeft = getVisibleTrees(input[y][x], treesToTheLeft);
 
     let treesToTheRight = getTreesToTheRight(y, x, input);
-    let visibleTreesRight = getVisibleTrees(input[y][x].height, treesToTheRight);
+    let visibleTreesRight = getVisibleTrees(input[y][x], treesToTheRight);
 
     let treesUp = getTreesUp(y, x, input);
-    let visibleTreesUp = getVisibleTrees(input[y][x].height, treesUp);
+    let visibleTreesUp = getVisibleTrees(input[y][x], treesUp);
 
     let treesDown = getTreesDown(y, x, input);
-    let visibleTreesDown = getVisibleTrees(input[y][x].height, treesDown);
+    let visibleTreesDown = getVisibleTrees(input[y][x], treesDown);
 
     return visibleTreesLeft * visibleTreesRight * visibleTreesUp * visibleTreesDown;
 }
@@ -71,7 +65,7 @@ function getVisibleTrees(initialTree, trees) {
 function getTreesToTheLeft(y, x, input) {
     let trees = [];
     for (let i = x - 1; i >= 0; i--) {
-        trees.push(input[y][i].height);
+        trees.push(input[y][i]);
     }
 
     return trees;
@@ -80,7 +74,7 @@ function getTreesToTheLeft(y, x, input) {
 function getTreesToTheRight(y, x, input) {
     let trees = [];
     for (let i = x + 1; i < input[y].length; i++) {
-        trees.push(input[y][i].height);
+        trees.push(input[y][i]);
     }
 
     return trees;
@@ -89,7 +83,7 @@ function getTreesToTheRight(y, x, input) {
 function getTreesUp(y, x, input) {
     let trees = [];
     for (let i = y - 1; i >= 0; i--) {
-        trees.push(input[i][x].height);
+        trees.push(input[i][x]);
     }
 
     return trees;
@@ -98,7 +92,7 @@ function getTreesUp(y, x, input) {
 function getTreesDown(y, x, input) {
     let trees = [];
     for (let i = y + 1; i < input.length; i++) {
-        trees.push(input[i][x].height);
+        trees.push(input[i][x]);
     }
 
     return trees;
