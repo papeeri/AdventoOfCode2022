@@ -2,7 +2,7 @@
 
 import { getInputData } from "../lib/utils.js";
 
-const _inputPath = "./day08/inputPart.txt";
+const _inputPath = "./day08/input.txt";
 
 function parser(inputData) {
     let input = inputData.split(/\r?\n/).map((r) =>
@@ -19,7 +19,7 @@ function mission() {
     let highestScenicScore = 0;
 
     for (let y = 0; y < input.length; y++) {
-        for (let x = 0; x < input.length; x++) {
+        for (let x = 0; x < input[y].length; x++) {
             let scenicScore = getScenicScore(y, x, input);
 
             input[y][x].scenicScore = scenicScore;
@@ -33,123 +33,88 @@ function mission() {
 }
 
 function getScenicScore(y, x, input) {
-    if (y === 3 && x === 1) {
+    if (y === 50 && x === 50) {
         console.log("Hej");
     }
 
-    let visibleTreesLeft = getVisibleTreesLeft(y, x, input);
-    if (visibleTreesLeft === 0) {
+    if (y === 0 || y === input.length - 1 || x === 0 || x === input[y].length - 1) {
         return 0;
     }
 
-    let visibleTreesRight = getVisibleTreesRight(y, x, input);
-    if (visibleTreesRight === 0) {
-        return 0;
-    }
+    let treesToTheLeft = getTreesToTheLeft(y, x, input);
+    let visibleTreesLeft = getVisibleTrees(input[y][x].height, treesToTheLeft);
 
-    let visibleTreesUp = getVisibleTreesUp(y, x, input);
-    if (visibleTreesUp === 0) {
-        return 0;
-    }
+    let treesToTheRight = getTreesToTheRight(y, x, input);
+    let visibleTreesRight = getVisibleTrees(input[y][x].height, treesToTheRight);
 
-    let visibleTreesDown = getVisibleTreesDown(y, x, input);
-    if (visibleTreesDown === 0) {
-        return 0;
-    }
+    let treesUp = getTreesUp(y, x, input);
+    let visibleTreesUp = getVisibleTrees(input[y][x].height, treesUp);
+
+    let treesDown = getTreesDown(y, x, input);
+    let visibleTreesDown = getVisibleTrees(input[y][x].height, treesDown);
 
     return visibleTreesLeft * visibleTreesRight * visibleTreesUp * visibleTreesDown;
 }
 
-function getVisibleTreesLeft(y, x, input) {
-    if (x === 0) {
-        return 0;
-    }
-
-    if (input[y][x].height < input[y][x - 1].height) {
+function getVisibleTrees(initialTree, trees) {
+    if (trees.length === 1) {
         return 1;
     }
 
-    let visibleTrees = 0;
-    let lastTreeHeight = 0;
+    if (trees[0] >= initialTree) {
+        return 1;
+    }
+
+    let visibleTrees = 1;
+    for (let i = 1; i < trees.length; i++) {
+        if (trees[i] < trees[i - 1]) {
+            return visibleTrees;
+        }
+
+        // if (trees[i] === trees[i - 1] && initialTree <= trees[i]) {
+        //     return visibleTrees;
+        // }
+
+        visibleTrees++;
+    }
+
+    return visibleTrees;
+}
+
+function getTreesToTheLeft(y, x, input) {
+    let trees = [];
     for (let i = x - 1; i >= 0; i--) {
-        if (input[y][i].height >= lastTreeHeight) {
-            visibleTrees++;
-            lastTreeHeight = input[y][i].height;
-        } else {
-            return visibleTrees;
-        }
+        trees.push(input[y][i].height);
     }
 
-    return visibleTrees;
+    return trees;
 }
 
-function getVisibleTreesRight(y, x, input) {
-    if (x === input.length - 1) {
-        return 0;
-    }
-
-    if (input[y][x].height < input[y][x + 1].height) {
-        return 1;
-    }
-
-    let visibleTrees = 0;
-    let lastTreeHeight = 0;
+function getTreesToTheRight(y, x, input) {
+    let trees = [];
     for (let i = x + 1; i < input[y].length; i++) {
-        if (input[y][i].height >= lastTreeHeight) {
-            visibleTrees++;
-            lastTreeHeight = input[y][i].height;
-        } else {
-            return visibleTrees;
-        }
+        trees.push(input[y][i].height);
     }
 
-    return visibleTrees;
+    return trees;
 }
 
-function getVisibleTreesUp(y, x, input) {
-    if (y === 0) {
-        return 0;
-    }
-
-    if (input[y][x].height < input[y - 1][x].height) {
-        return 1;
-    }
-
-    let visibleTrees = 0;
-    let lastTreeHeight = 0;
+function getTreesUp(y, x, input) {
+    let trees = [];
     for (let i = y - 1; i >= 0; i--) {
-        if (input[i][x].height >= lastTreeHeight) {
-            visibleTrees++;
-            lastTreeHeight = input[i][x].height;
-        } else {
-            return visibleTrees;
-        }
+        trees.push(input[i][x].height);
     }
 
-    return visibleTrees;
+    return trees;
 }
 
-function getVisibleTreesDown(y, x, input) {
-    if (y === input[y].length - 1) {
-        return 0;
-    }
-
-    if (input[y][x].height < input[y + 1][x].height) {
-        return 1;
-    }
-
-    let visibleTrees = 0;
-    let lastTreeHeight = 0;
+function getTreesDown(y, x, input) {
+    let trees = [];
     for (let i = y + 1; i < input.length; i++) {
-        if (input[i][x].height >= lastTreeHeight) {
-            visibleTrees++;
-            lastTreeHeight = input[i][x].height;
-        } else {
-            return visibleTrees;
-        }
+        trees.push(input[i][x].height);
     }
 
-    return visibleTrees;
+    return trees;
 }
 
 mission();
