@@ -33,10 +33,6 @@ function mission() {
 }
 
 function getScenicScore(y, x, input) {
-    if (y === 50 && x === 50) {
-        console.log("Hej");
-    }
-
     if (y === 0 || y === input.length - 1 || x === 0 || x === input[y].length - 1) {
         return 0;
     }
@@ -61,21 +57,12 @@ function getVisibleTrees(initialTree, trees) {
         return 1;
     }
 
-    if (trees[0] >= initialTree) {
-        return 1;
-    }
-
-    let visibleTrees = 1;
-    for (let i = 1; i < trees.length; i++) {
-        if (trees[i] < trees[i - 1]) {
+    let visibleTrees = 0;
+    for (let i = 0; i < trees.length; i++) {
+        visibleTrees++;
+        if (trees[i] >= initialTree) {
             return visibleTrees;
         }
-
-        // if (trees[i] === trees[i - 1] && initialTree <= trees[i]) {
-        //     return visibleTrees;
-        // }
-
-        visibleTrees++;
     }
 
     return visibleTrees;
