@@ -49,7 +49,7 @@ function mission() {
             matrix.push(row);
         }
 
-        tailPositions.map((t) => {
+        knotPositions[1].map((t) => {
             matrix[t.y][t.x] = "#";
         });
 
@@ -99,12 +99,12 @@ function mission() {
         }
     });
 
-    // printTailVisitedPositions();
+    printTailVisitedPositions();
     console.log("");
 
-    // let tailVisited = tailPositions.filter(onlyUnique);
+    let tailVisited = knotPositions[1].filter(onlyUnique);
 
-    // console.log("Tail visited positions:", tailVisited.length);
+    console.log("Tail visited positions:", tailVisited.length);
 }
 
 function getDirection(direction) {
