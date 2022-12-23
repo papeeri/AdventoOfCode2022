@@ -2,7 +2,7 @@
 
 import { getInputData } from "../lib/utils.js";
 
-const _inputPath = "./day09/inputPart.txt";
+const _inputPath = "./day09/input.txt";
 
 function parser(inputData) {
     return inputData
@@ -25,26 +25,12 @@ function mission() {
     function moveTail() {
         let tailMove = { x: head.x - tail.x, y: head.y - tail.y };
 
-        let moveX = Math.abs(head.x) - Math.abs(tail.x);
-        let moveY = Math.abs(head.y) - Math.abs(tail.y);
-
-        if (moveX > 1 && moveY > 1) {
-            tail = { x: tail.x + 1, y: tail.y + 1 };
-            return;
-        }
-
         if (Math.abs(tailMove.x) > 1 || Math.abs(tailMove.y) > 1) {
             tail = {
                 x: tail.x + Math.sign(tailMove.x),
                 y: tail.y + Math.sign(tailMove.y),
             };
         }
-    }
-
-    function getTailVisitedPositions() {
-        let tailVisitedPositions = []
-
-        tailPositions.map(t =>)
     }
 
     function printTailVisitedPositions() {
@@ -67,9 +53,9 @@ function mission() {
     }
 
     function printPosition() {
-        for (let y = 4; y >= 0; y--) {
+        for (let y = 10; y >= -10; y--) {
             let row = [];
-            for (let x = 0; x <= 5; x++) {
+            for (let x = -40; x <= 40; x++) {
                 if (y === head.y && x === head.x) {
                     row.push("H");
                     continue;
@@ -91,29 +77,28 @@ function mission() {
         console.log("");
     }
 
-    printPosition();
+    // printPosition();
 
     moves.map((m) => {
-        console.log(m);
+        // console.log(m);
         let direction = getDirection(m.direction);
         for (let i = 0; i < m.steps; i++) {
             head = { x: head.x + direction.x, y: head.y + direction.y };
             headPositions.push(head);
-            // console.log(head);
-            // console.log(tail);
-            printPosition();
+            // printPosition();
             moveTail();
             tailPositions.push(tail);
-            // console.log(head);
-            // console.log(tail);
 
-            printPosition();
+            // printPosition();
         }
     });
 
-    printTailVisitedPositions();
-    let tailVisitedPositions = getTailVisitedPositions();
-    // console.log(moves);
+    // printTailVisitedPositions();
+    console.log("");
+
+    let tailVisited = tailPositions.filter(onlyUnique);
+
+    console.log("Tail visited positions:", tailVisited.length);
 }
 
 function getDirection(direction) {
@@ -127,6 +112,10 @@ function getDirection(direction) {
         case "R":
             return { x: 1, y: 0 };
     }
+}
+
+function onlyUnique(value, index, self) {
+    return index === self.findIndex((t) => t.x === value.x && t.y === value.y);
 }
 
 mission();
