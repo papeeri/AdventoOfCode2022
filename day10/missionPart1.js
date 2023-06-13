@@ -1,8 +1,8 @@
-// https://adventofcode.com/2022/day/9
+// https://adventofcode.com/2022/day/10
 
 import { getInputData } from "../lib/utils.js";
 
-const _inputPath = "./day09/input.txt";
+const _inputPath = "./day10/input.txt";
 
 function parser(inputData) {
     let input = inputData.split(/\r?\n/);
